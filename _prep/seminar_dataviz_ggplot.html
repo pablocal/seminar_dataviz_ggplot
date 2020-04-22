@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>DataViz con <i class="fab  fa-r-project "></i> y ggplot2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Quick &amp; dirty intro 🍻" />
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: left, middle, inverse, title-slide
+
+# DataViz con <i class="fab  fa-r-project "></i> y ggplot2
+### Quick &amp; dirty intro 🍻
+### Pablo Cabrera Álvarez <br> <span style="font-size: 75%;"><a href="https://github.com/pablocal"><i class="fab  fa-github "></i></a> | <a href="https://twitter.com/pablocalv"><i class="fab  fa-twitter "></i></a> <span class="citation">@pablocalv</span> </span> <br>
+### <br><br>Abril 2020
+
+---
+
+
+
+&lt;style type="text/css"&gt;
+/* custom.css */
+.left-code {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+}
+.right-plot {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+.plot-callout {
+  height: 225px;
+  width: 450px;
+  bottom: 5%;
+  right: 5%;
+  position: absolute;
+  padding: 0px;
+  z-index: 100;
+}
+.plot-callout img {
+  width: 100%;
+  border: 4px solid #23373B;
+}
+&lt;/style&gt;
+# Webinar
+
+- <i class="fab  fa-r-project "></i> y RStudio  
+     
+--
+
+- La **gramática de gráficos** y ggplot2        
+      
+
+--
+
+- **Ploteo** con ggplot2:
+
+  * Data
+  * Map
+  * Geoms
+  * Scales
+  * Themes
+     
+---
+# ¿Por qué <i class="fab  fa-r-project "></i>?
+
+
+
+---
+
+# <i class="fab  fa-r-project "></i> como lenguaje orientado a objetos
+
+<i class="fab  fa-r-project "></i> is an **object-oriented** statistical programming language: all objects can be stored
+
+
+```r
+a &lt;- c(5, 6)
+b &lt;- 2
+a*b
+```
+
+```
+## [1] 10 12
+```
+
+---
+# Funciones en <i class="fab  fa-r-project "></i>
+
+- Las **funciones** son las herramientas que sirven para trabajar con los datos, también son objetos almacenables y modificales
+
+- Las **funciones** precisan de argumentos:
+
+
+```r
+a &lt;- c(3, 5, 9)
+mean(x = a)
+```
+
+```
+## [1] 5.666667
+```
+
+```r
+mean(a)
+```
+
+```
+## [1] 5.666667
+```
+
+---
+# 🆘 Help!
+
+#### `help()`
+
+ - Ayuda con las funciones:  
+
+
+```r
+help(mean)
+?mean
+```
+
+--
+
+- Vignettes y ejemplos     
+
+- [Stackoverflow](https://stackoverflow.com/)    
+
+- [Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)    
+
+- [Quick <i class="fab  fa-r-project "></i>](https://www.statmethods.net/)
+
+
+---
+# Working flow en RStudio
+
+- script
+  * Comentar
+  * ejecutar el código
+
+- datos
+
+- consola
+
+- gráficos
+
+---
+# Paquetes, datos y funciones
+
+- Tidyverse y ggplot2
+
+- mpg
+
+- Funciones para explorar los datos:
+
+
+```r
+str(df) # estructura del data frame (df)
+summary(df) # estadísticos descriptivos de las variables del df
+head(df) # muestra primeras 6 observaciones del df
+```
+
+### 🧠 Try it 1
+
+---
+# 🤓 En mi barrio te vacilo y en el tuyo marco estilo
+
+- Nombrar objetos
+  * 2Cs: Conciso y consistente
+  * Minúscula
+  * Estilos: `sexoEdad`, `sexo_edad` o `sexo.edad`    
+
+--
+
+- Comentar `#` [`Ctrl` + `Mayús` + `C`]
+  * Explicar el por qué
+  * Usar separadores para organizar el scrip [`Ctrl` + `Mayús` + `R`]
+
+--
+
+- Espacios  
+  * Usar espacios en torno a los operadores
+  * Evitar espacios en el principio/final de los paréntesis
+  
+
+```r
+a&lt;-22+23 # mal
+a &lt;- 22 + 23 # bien
+```
+
+---
+
+#Introducción a ggplot2: data, aesthetics y geoms
+
+## La gramática
+![](pics/pic3.png)
+
+
+![](pics/pic4.png)
+
+---
+
+##ggplot2 y la gramática de gráficos
+
+* ggplot2 es un paquete de R utilizado para generar gráficos
+* Su estructura está basada en la gramática de gráficos (Wickham, 2010)
+* Elementos de la gramática de gráficos en ggplot2:
+     * **Data**
+     * **Aesthetics**
+     * **Geometries**
+     * Statistics
+     * Facets
+     * Coordinates
+     * Theme
+   
+---   
+     
+##Estructura ggplot2
+
+* **ggplot2** se estructura basado en la gramática de gráficos a través de capas, cada
+capa añade un elemento nuevo  
+   
+* Cada capa se añade utilizando el signo "+"
+   
+* Estructura básica: 
+
+
+```r
+myplot &lt;- ggplot(data=mydata, aes(aes1=var1, 
+                                  aes2=var2, aesN=varN)) + 
+                  geom_xxx() +
+                  stat_xxx() +
+                  facet_XXX() +
+                  theme()
+myplot
+```
+---
+   
+##Ejemplo ggplot2 I
+En la primera capa se establecen data y aestehtics:
+
+```r
+g1 &lt;- ggplot(data = mtcars, aes(x = wt, y = mpg))
+g1
+```
+
+![](seminar_dataviz_ggplot_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+---
+
+##Ejemplo ggplot2 II
+En la segunda se añade "+" la geom:
+
+```r
+g1 &lt;- g1 + geom_point()
+g1
+```
+
+![](seminar_dataviz_ggplot_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+---
+
+##Datos 
+ 
+* Piensa en el gráfico y en la estructura de **datos** que necesitas para llevarlo a cabo   
+      
+* Primero lleva a cabo las operaciones como recodificaciones, creación de nuevas variables...
+        
+* La transformación de datos pueden ahorrar mucho tiempo
+
+---
+
+##Ejemplo datos
+Queremos realizar un gráfico de la relación entre peso (wt) del coche y aceleración (qsec), pero solo para los automáticos
+ 
+
+```r
+head(mtcars[, c("am", "wt", "qsec")], n=10)
+```
+
+```
+##                   am    wt  qsec
+## Mazda RX4          1 2.620 16.46
+## Mazda RX4 Wag      1 2.875 17.02
+## Datsun 710         1 2.320 18.61
+## Hornet 4 Drive     0 3.215 19.44
+## Hornet Sportabout  0 3.440 17.02
+## Valiant            0 3.460 20.22
+## Duster 360         0 3.570 15.84
+## Merc 240D          0 3.190 20.00
+## Merc 230           0 3.150 22.90
+## Merc 280           0 3.440 18.30
+```
+---
+
+##Ejemplo datos 2
+Para seleccionar solo los casos `\(am == "Automatico"\)` hay dos opciones:  
+
+
+```r
+#Opción 1
+
+mtcars2 &lt;- filter(mtcars, am == "Automatico")
+
+myplot &lt;- ggplot(data = mtcars2, aes(x= wt, y=qsec)) + 
+                geom_point()
+#Opción 2
+
+myplot &lt;- ggplot(data = filter(mtcars2, am == "Automatico"),
+                 aes(x= wt, y=qsec)) + 
+                geom_point()
+```
+---
+
+##Aesthetics I
+
+La **aesthetics** se refiere a las características del gráfico que utilizamos para representar (*mapear*) información.
+   
+Aspectos que pueden ser utilizados para representar información (cambia según la geometría): 
+   
+* Eje x (x)
+* Eje y (y)
+* Color (col)
+* Forma (shape)
+* Tamaño (size)
+* Transparencia (alpha)
+* Relleno (fill)
+* Tipo de línea (linetype)
+* Anchura (width)
+* Máximos y mínimos (xmax, ymax, xmin, y min)
+* ...
+
+---
+
+## Aesthetics II
+
+* No confundir aestehtics con atributos
+
+* La aesthetics se incorpora de manera preferible dentro de ggplot() -&gt; Efecto herencia   
+   
+* En caso de que quieras combinar más de un gráfico, puedes incorporar la aestehtics a un geom_xxx()
+
+Por ejemplo: 
+
+
+```r
+#Opción 1
+
+myplot &lt;- ggplot(data = mtcars, 
+                aes(x= wt, y=qsec, col=am, shape=cyl)) + 
+                geom_point()
+#Opción 2
+
+myplot &lt;- ggplot(data = mtcars) + 
+                geom_point(aes(x= wt, y=qsec, 
+                               col=am, shape=cyl))
+```
+---
+##Ejemplo aestehtics: atributos vs aesthetics
+
+```r
+myplot &lt;- ggplot(data = mtcars, aes(x = mpg, y=wt)) + 
+                geom_point( shape=1, col="red")
+myplot
+```
+
+![](seminar_dataviz_ggplot_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+---
+##Ejemplo aestehtics: efecto herencia
+Gráfico en el  eje X **mpg** (consumo), y en el eje Y tanto **drat** (ratio eje - línea) como **wt** (peso - dispersión)
+
+```r
+myplot &lt;- ggplot(data = mtcars, aes(x = mpg)) + 
+                geom_point(aes(y = wt)) + 
+                geom_line(aes(y = drat))
+myplot
+```
+
+![](seminar_dataviz_ggplot_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "idea",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
