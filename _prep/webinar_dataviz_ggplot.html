@@ -20,36 +20,10 @@ class: left, middle, inverse, title-slide
 
 
 
-&lt;style type="text/css"&gt;
-/* custom.css */
-.left-code {
-  color: #777;
-  width: 38%;
-  height: 92%;
-  float: left;
-}
-.right-plot {
-  width: 60%;
-  float: right;
-  padding-left: 1%;
-}
-.plot-callout {
-  height: 225px;
-  width: 450px;
-  bottom: 5%;
-  right: 5%;
-  position: absolute;
-  padding: 0px;
-  z-index: 100;
-}
-.plot-callout img {
-  width: 100%;
-  border: 4px solid #23373B;
-}
-&lt;/style&gt;
 # Webinar
 
 - <i class="fab  fa-r-project "></i> y RStudio  
+     
      
 --
 
@@ -61,26 +35,40 @@ class: left, middle, inverse, title-slide
 - **Ploteo** con ggplot2:
 
   * Data
-  * Map
+  * Aes
   * Geoms
-  * Scales
   * Themes
      
 ---
-# ¿Por qué <i class="fab  fa-r-project "></i>?
+# ¿Por qué dataViz en <i class="fab  fa-r-project "></i>?
 
+- [Drivers de éxito profesional por clase](https://twitter.com/torres__an/status/1229691472498319360/photo/1)
 
+- [Tour de Francia I](https://twitter.com/geokaramanis/status/1247586395876741120/photo/1)
+
+- [Tour de Francia II](https://twitter.com/ariamsita/status/1248907681903099904/photo/1)
+
+- [Crisis política e institucional en España](https://twitter.com/pablocalv/status/1189608772538372096/photo/1)
 
 ---
 
 # <i class="fab  fa-r-project "></i> como lenguaje orientado a objetos
 
-<i class="fab  fa-r-project "></i> is an **object-oriented** statistical programming language: all objects can be stored
+- <i class="fab  fa-r-project "></i> es un lenguaje de programación estadístico orientado a objetos:
+
+--
 
 
 ```r
 a &lt;- c(5, 6)
 b &lt;- 2
+```
+
+--
+
+- Los objetos son almacenados y pueden ser utilizados en otras operaciones:
+
+```r
 a*b
 ```
 
@@ -89,23 +77,16 @@ a*b
 ```
 
 ---
-# Funciones en <i class="fab  fa-r-project "></i>
+# Funciones y paquetes en <i class="fab  fa-r-project "></i>
 
-- Las **funciones** son las herramientas que sirven para trabajar con los datos, también son objetos almacenables y modificales
+- Las **funciones** son las herramientas que nos permiten interaccionar con los objetos (datos)
 
-- Las **funciones** precisan de argumentos:
+--
 
+- Las **funciones** contienen argumentos:
 
 ```r
 a &lt;- c(3, 5, 9)
-mean(x = a)
-```
-
-```
-## [1] 5.666667
-```
-
-```r
 mean(a)
 ```
 
@@ -113,13 +94,25 @@ mean(a)
 ## [1] 5.666667
 ```
 
+--
+
+- Las **funciones** se organizan en **paquetes**. Existen más de 15,500 paquetes: manipulación de datos, visualización, análisis estadísticos, especializados por área.
+
+--
+
+- <i class="fab  fa-r-project "></i> tiene preinstaldos siete paquetes, el resto hay que instalarlos según se necesiten:
+
+```r
+install.packages("ggplot2") # instala el paquete ggplot2
+library(ggplot2) # carga el paquete ggplot2
+```
+
 ---
 # 🆘 Help!
 
 #### `help()`
 
- - Ayuda con las funciones:  
-
+ - **Ayuda** con las funciones:  
 
 ```r
 help(mean)
@@ -128,7 +121,7 @@ help(mean)
 
 --
 
-- Vignettes y ejemplos     
+- **Vignettes** y ejemplos     
 
 - [Stackoverflow](https://stackoverflow.com/)    
 
@@ -138,250 +131,276 @@ help(mean)
 
 
 ---
-# Working flow en RStudio
+# Workflow en RStudio
 
-- script
-  * Comentar
-  * ejecutar el código
-
-- datos
-
-- consola
-
-- gráficos
+.center[&lt;img src="pics/pic101.png" style="width:900px;height:500px;"/&gt;]
 
 ---
 # Paquetes, datos y funciones
 
-- Tidyverse y ggplot2
+- **ggplot2** y **ggthemes**
 
-- mpg
+- **mpg** es un *data frame*: datos rectangulares en los que cada fila es un caso y cada columna una variable
 
 - Funciones para explorar los datos:
 
 
 ```r
-str(df) # estructura del data frame (df)
-summary(df) # estadísticos descriptivos de las variables del df
-head(df) # muestra primeras 6 observaciones del df
+str(object = mpg) # estructura del data frame (df)
+summary(object = mpg) # estadísticos descriptivos de las variables del df
+head(x = mpg) # muestra primeras 6 observaciones del df
 ```
 
-### 🧠 Try it 1
-
----
-# 🤓 En mi barrio te vacilo y en el tuyo marco estilo
-
-- Nombrar objetos
-  * 2Cs: Conciso y consistente
-  * Minúscula
-  * Estilos: `sexoEdad`, `sexo_edad` o `sexo.edad`    
-
---
-
-- Comentar `#` [`Ctrl` + `Mayús` + `C`]
-  * Explicar el por qué
-  * Usar separadores para organizar el scrip [`Ctrl` + `Mayús` + `R`]
-
---
-
-- Espacios  
-  * Usar espacios en torno a los operadores
-  * Evitar espacios en el principio/final de los paréntesis
-  
 
 ```r
-a&lt;-22+23 # mal
-a &lt;- 22 + 23 # bien
+str(mpg) # también funciona
+summary(mpg) 
+head(mpg) 
 ```
 
+
+### 🧠 Try It 1
+
 ---
+# Gramática de graficos
 
-#Introducción a ggplot2: data, aesthetics y geoms
+--
 
-## La gramática
+.pull-left[
+- La gramática permite organizar los elementos básicos para que cobren sentido
+
+- Descompone estructuras complejas en unidades básicas:
+
+.center[
 ![](pics/pic3.png)
+]
 
+]
 
-![](pics/pic4.png)
+--
+
+.pull-right[
+
+.center[![](pics/pic4.png)]
+![](pics/pic5.png)
+]
 
 ---
 
-##ggplot2 y la gramática de gráficos
+## ggplot2 y la gramática de gráficos
 
-* ggplot2 es un paquete de R utilizado para generar gráficos
-* Su estructura está basada en la gramática de gráficos (Wickham, 2010)
-* Elementos de la gramática de gráficos en ggplot2:
-     * **Data**
-     * **Aesthetics**
-     * **Geometries**
-     * Statistics
-     * Facets
-     * Coordinates
-     * Theme
+
+
+.center[&lt;img src="pics/pic6.png" style="width:600px;height:500px;"/&gt;]
+
+
+
+---
+
+# Estructura ggplot2
+
+- **ggplot2** se estructura basado en la gramática de gráficos a través de capas, cada
+capa (+) añade un elemento nuevo  
    
----   
-     
-##Estructura ggplot2
-
-* **ggplot2** se estructura basado en la gramática de gráficos a través de capas, cada
-capa añade un elemento nuevo  
-   
-* Cada capa se añade utilizando el signo "+"
-   
-* Estructura básica: 
+- Estructura básica (data, aes y geom_): 
 
 
 ```r
-myplot &lt;- ggplot(data=mydata, aes(aes1=var1, 
-                                  aes2=var2, aesN=varN)) + 
-                  geom_xxx() +
-                  stat_xxx() +
-                  facet_XXX() +
-                  theme()
-myplot
-```
----
-   
-##Ejemplo ggplot2 I
-En la primera capa se establecen data y aestehtics:
+# guardado como objeto my_plot
+my_plot &lt;- ggplot(data = mpg, mapping = aes(y = cty, x = class)) + 
+                  geom_boxplot()
+my_plot
 
-```r
-g1 &lt;- ggplot(data = mtcars, aes(x = wt, y = mpg))
-g1
-```
-
-![](seminar_dataviz_ggplot_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
----
-
-##Ejemplo ggplot2 II
-En la segunda se añade "+" la geom:
-
-```r
-g1 &lt;- g1 + geom_point()
-g1
-```
-
-![](seminar_dataviz_ggplot_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
----
-
-##Datos 
- 
-* Piensa en el gráfico y en la estructura de **datos** que necesitas para llevarlo a cabo   
-      
-* Primero lleva a cabo las operaciones como recodificaciones, creación de nuevas variables...
-        
-* La transformación de datos pueden ahorrar mucho tiempo
-
----
-
-##Ejemplo datos
-Queremos realizar un gráfico de la relación entre peso (wt) del coche y aceleración (qsec), pero solo para los automáticos
- 
-
-```r
-head(mtcars[, c("am", "wt", "qsec")], n=10)
-```
-
-```
-##                   am    wt  qsec
-## Mazda RX4          1 2.620 16.46
-## Mazda RX4 Wag      1 2.875 17.02
-## Datsun 710         1 2.320 18.61
-## Hornet 4 Drive     0 3.215 19.44
-## Hornet Sportabout  0 3.440 17.02
-## Valiant            0 3.460 20.22
-## Duster 360         0 3.570 15.84
-## Merc 240D          0 3.190 20.00
-## Merc 230           0 3.150 22.90
-## Merc 280           0 3.440 18.30
+# no guardado
+ggplot(data = mpg, mapping = aes(y = cty, x = class)) + 
+                  geom_boxplot()
 ```
 ---
 
-##Ejemplo datos 2
-Para seleccionar solo los casos `\(am == "Automatico"\)` hay dos opciones:  
-
-
-```r
-#Opción 1
-
-mtcars2 &lt;- filter(mtcars, am == "Automatico")
-
-myplot &lt;- ggplot(data = mtcars2, aes(x= wt, y=qsec)) + 
-                geom_point()
-#Opción 2
-
-myplot &lt;- ggplot(data = filter(mtcars2, am == "Automatico"),
-                 aes(x= wt, y=qsec)) + 
-                geom_point()
-```
----
-
-##Aesthetics I
-
-La **aesthetics** se refiere a las características del gráfico que utilizamos para representar (*mapear*) información.
+# Aesthetics 
    
 Aspectos que pueden ser utilizados para representar información (cambia según la geometría): 
    
-* Eje x (x)
-* Eje y (y)
-* Color (col)
-* Forma (shape)
-* Tamaño (size)
-* Transparencia (alpha)
-* Relleno (fill)
-* Tipo de línea (linetype)
-* Anchura (width)
-* Máximos y mínimos (xmax, ymax, xmin, y min)
-* ...
+- Eje x (x)
+- Eje y (y)
+- Color (color)
+- Forma (shape)
+- Tamaño (size)
+- Transparencia (alpha)
+- Relleno (fill)
+- Tipo de línea (linetype)
+
+---
+# Aesthetics 
+
+
+```r
+ggplot(data = mpg, mapping = aes(y = cty, x =  class)) + 
+  geom_boxplot()
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## Aesthetics II
+## Aesthetics 
 
-* No confundir aestehtics con atributos
 
-* La aesthetics se incorpora de manera preferible dentro de ggplot() -&gt; Efecto herencia   
+- Diferenciar entre aesthetics y atributos
+
+--
+
+- Aesthetics se puede incorporar tanto dentro de `ggplot()` como del `geom`
    
-* En caso de que quieras combinar más de un gráfico, puedes incorporar la aestehtics a un geom_xxx()
-
-Por ejemplo: 
 
 
 ```r
-#Opción 1
+# Opción 1
 
-myplot &lt;- ggplot(data = mtcars, 
-                aes(x= wt, y=qsec, col=am, shape=cyl)) + 
-                geom_point()
-#Opción 2
+ggplot(data = mpg, mapping = aes(y = cty, x = class)) + 
+  geom_boxplot()
 
-myplot &lt;- ggplot(data = mtcars) + 
-                geom_point(aes(x= wt, y=qsec, 
-                               col=am, shape=cyl))
+# Opción 2
+
+ggplot(data = mpg) + 
+  geom_boxplot(mapping = aes(y = cty, x = class))
 ```
----
-##Ejemplo aestehtics: atributos vs aesthetics
-
-```r
-myplot &lt;- ggplot(data = mtcars, aes(x = mpg, y=wt)) + 
-                geom_point( shape=1, col="red")
-myplot
-```
-
-![](seminar_dataviz_ggplot_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 
 ---
-##Ejemplo aestehtics: efecto herencia
-Gráfico en el  eje X **mpg** (consumo), y en el eje Y tanto **drat** (ratio eje - línea) como **wt** (peso - dispersión)
+.pull-left[
+### Aesthetics
 
 ```r
-myplot &lt;- ggplot(data = mtcars, aes(x = mpg)) + 
-                geom_point(aes(y = wt)) + 
-                geom_line(aes(y = drat))
-myplot
+ggplot(data = mpg, 
+      mapping = aes(y = cty, x = class, color = class)) + 
+  geom_boxplot()
 ```
 
-![](seminar_dataviz_ggplot_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/plot1-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+## Atributos
+
+```r
+ggplot(data = mpg, mapping = aes(y = cty, x = class)) + 
+*  geom_boxplot(color = "red", size = 2) 
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/plot2-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Ejemplo efecto herencia
+
+Añadir un gráfico de dispersión (scatter) que muestre la dispersión de los datos: 
+
+
+```r
+ggplot(data = mpg, mapping = aes(y = cty, x =  class)) + 
+  geom_boxplot() +
+*   geom_point() 
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+.pull-left[
+### geom_density2d
+
+```r
+base_plot &lt;- ggplot(data = mpg, mapping = aes(x = cty, y = hwy))
+base_plot + geom_density_2d()
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+] 
+
+.pull-right[
+### geom_rug
+
+```r
+base_plot + geom_rug()
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+] 
+
+---
+
+.pull-left[
+### geom_col
+
+```r
+base_plot &lt;- ggplot(data = mpg, mapping = aes(x = class, y = hwy))
+base_plot + geom_col()
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+] 
+
+.pull-right[
+### geom_violin
+
+```r
+base_plot + geom_violin()
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+.pull-left[
+### geom_histogram
+
+```r
+base_plot &lt;- ggplot(data = mpg, mapping = aes(x = hwy))
+base_plot + geom_histogram()
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+] 
+
+
+.pull-right[
+### geom_dotplot
+
+```r
+base_plot + geom_dotplot()
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+] 
+
+---
+# Labels 
+
+
+
+```r
+ggplot(data = mpg, mapping = aes(x = class, y = hwy, color = class)) +
+  geom_violin() +
+  labs(tile = "Mi título",
+       subtile = "Subtítulo",
+       x = "Tipo de vehículo",
+       y = "Millas por galón (autopista)")
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Theme
+
+
+```r
+ggplot(data = mpg, mapping = aes(x = class, y = hwy, color = class)) +
+  geom_violin() +
+  theme_minimal()
+```
+
+&lt;img src="webinar_dataviz_ggplot_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -7,10 +7,12 @@
 # Comments ----------------------------------------------------------------
 # 
 # Antes de comenzar recuerda:
-#   1. Para EJECUTAR una línea del script usa Ctrl+Enter o el botón Run.
+#   1. Para EJECUTAR una línea del script usa Ctrl+Enter o el botón Run
+#      en la parte superior derecha de este script.
 #   2. Todas las líneas antecedidas por "#" son comentarios y no se ejecutarán.
-#   3. Si en algún momento quieres comenzar desde cero usa Ctrl+Mayús+F10.
-#
+#   3. Si en algún momento quieres comenzar desde cero usa Ctrl+Mayús+F10
+#      o en el menú Session >> Restart R.
+# 
 # Options and packages ----------------------------------------------------
 
 # Cargar paquetes y datos -------------------------------------------------
@@ -48,7 +50,7 @@ ___(___)
 # la familia de la cerveza (family). Para ello vamos a realizar un plot de 
 # dispersión (puntos). Todos los plots precisan de tres elementos básicos: 
 # datos, aesthetics y geometrías. Antes de comenzar con el código completa 
-# la siguiente tabla sustituyendo los ____:
+# la siguiente tabla sustituyendo los espacios (____):
 
 # Datos: ____
 # Aesthetics: x = _____, y = ____, color = ____
@@ -63,16 +65,16 @@ plot_beer
 
 # b)
 # El principal problema de este plot es la densidad de los puntos en la parte 
-# inferior izquierda. Para solucionarlo vamos a utilizar dos argumentos 
-# dentro de la función geom_point(): alpha y position.
+# inferior izquierda. Para solucionarlo vamos a modificar dos atributos 
+# de los puntos: alpha y position.
 # 
-# El argumento alpha sirve para aplicar un nivel de tranparencia, 
+# El atributo alpha sirve para aplicar un nivel de tranparencia, 
 # en este caso a los puntos. La escala va de 0 (completamente transparente) a 
 # 1 (completamente opaco). Para este plot utiliza un alpha = .4. 
 # 
-# El argumento position permite modificar la posición de los puntos
+# El atributo position permite modificar la posición de los puntos
 # para que haya menos sueprposición. Para ello, utiliza el argumento
-# position = "jitter" (incluye las comillas).
+# position = "jitter" (¡Incluye las comillas!).
 
 plot_beer <- ggplot(data = beers, mapping = aes(x = alc_vol, y = bitter, col = family)) +
   geom_point(____ = ___, ______ = ______) 
